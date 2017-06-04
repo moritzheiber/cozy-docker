@@ -7,9 +7,12 @@ RUN apt-get update -qq && apt-get install -y curl ca-certificates && \
   useradd -d /cozy -s /bin/sh -mU cozy && \
   curl -o /tmp/cozy-stack -Lv https://github.com/cozy/cozy-stack/releases/download/${VERSION}/cozy-stack-linux-amd64-${VERSION} && \
   install -m0755 -o root -g root /tmp/cozy-stack /usr/bin/cozy-stack && \
-  rm -f /tmp/cozy-stack
+  rm -f /tmp/cozy-stack && \
+  install -d -o cozy -g cozy /cozy/.cozy
+
+ADD config/cozy.yml /cozy/.cozy/
 
 EXPOSE 8080
 USER cozy
 
-CMD ["cozy-stack","serve","--couchdb-url","http://couchdb:5984/"]
+CMD ["cozy-stack","serve","--config","/cozy/.cozy/cozy.yml"]
