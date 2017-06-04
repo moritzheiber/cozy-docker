@@ -1,0 +1,10 @@
+version: "2"
+services:
+  couchdb:
+    image: couchdb
+  
+  cozy:
+    build: .
+    image: cozy-stack
+    links:
+      - couchdb:couchdb
