@@ -1,12 +1,29 @@
-version: "2"
+version: "2.3"
 services:
   couchdb:
-    image: klaemo/couchdb:2.0.0
-  
+    image: apache/couchdb:2.1
+    network_mode: bridge
+    volumes:
+      - couchdb-data:/opt/couchdb/data
+
+  redis:
+    image: redis:alpine
+    network_mode: bridge
+
   cozy:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.alpine
     image: cozy-stack
     links:
       - couchdb:couchdb
+      - redis:redis
     ports:
       - "8080:8080"
+    network_mode: bridge
+    volumes:
+      - cozy-storage:/cozy/storage
+
+volumes:
+  couchdb-data:
+  cozy-storage:

@@ -1,18 +1,23 @@
-FROM ubuntu:xenial
+# vim: ft=dockerfile
+FROM golang:alpine as builder
 
-ENV VERSION="2017M1-alpha" \
-  CHECKSUM="34cc8fd67f5cbc26fbb9f523342b2604781f51bef418bd2b54bf7b81d6b8fc74"
+RUN apk --no-cache add git && \
+  go get -u github.com/cozy/cozy-stack
 
-RUN apt-get update -qq && apt-get install -y curl ca-certificates && \
-  useradd -d /cozy -s /bin/sh -mU cozy && \
-  curl -o /tmp/cozy-stack -Lv https://github.com/cozy/cozy-stack/releases/download/${VERSION}/cozy-stack-linux-amd64-${VERSION} && \
+FROM alpine:3.6
+
+COPY --from=builder /go/bin/cozy-stack /tmp/cozy-stack
+RUN apk --no-cache add git imagemagick && \
   install -m0755 -o root -g root /tmp/cozy-stack /usr/bin/cozy-stack && \
   rm -f /tmp/cozy-stack && \
-  install -d -o cozy -g cozy /cozy/.cozy
+  adduser -h /cozy -s /bin/sh -D cozy && \
+  install -d -o cozy -g cozy /cozy/.cozy /cozy/storage
 
 ADD config/cozy.yml /cozy/.cozy/
 
 EXPOSE 8080
 USER cozy
+
+VOLUME /cozy/storage
 
 CMD ["cozy-stack","serve","--config","/cozy/.cozy/cozy.yml"]

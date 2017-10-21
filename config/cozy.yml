@@ -1,4 +1,4 @@
-host: localhost
+host: 0.0.0.0
 port: 8080
 
 subdomains: nested
@@ -9,6 +9,22 @@ admin:
 
 fs:
   url: file://localhost/cozy/storage
-
+cache:
+  url: redis://redis:6379/1
+lock:
+  url: redis://redis:6379/2
+sessions:
+  url: redis://redis:6379/3
+downloads:
+  url: redis://redis:6379/4
+jobs:
+  workers: 1
+  url: redis://redis:6379/5
+realtime:
+  url: redis://redis:6379/7
 couchdb:
   url: http://couchdb:5984/
+
+log:
+  level: info
+  syslog: false
