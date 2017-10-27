@@ -24,6 +24,9 @@ services:
     networks:
       - docker_network
       - intranet
+    depends_on:
+      - couchdb
+      - redis
 
 volumes:
   couchdb-data:
