@@ -2,28 +2,34 @@ version: "2.3"
 services:
   couchdb:
     image: apache/couchdb:2.1
-    network_mode: bridge
     volumes:
       - couchdb-data:/opt/couchdb/data
+    networks:
+      - intranet
 
   redis:
     image: redis:alpine
-    network_mode: bridge
+    networks:
+      - intranet
 
   cozy:
-    build:
-      context: .
-      dockerfile: Dockerfile.alpine
-    image: cozy-stack
+    image: moritzheiber/cozy-stack
     links:
       - couchdb:couchdb
       - redis:redis
     ports:
       - "8080:8080"
-    network_mode: bridge
     volumes:
       - cozy-storage:/cozy/storage
+    networks:
+      - docker_network
+      - intranet
 
 volumes:
   couchdb-data:
   cozy-storage:
+networks:
+  docker_network:
+    driver: bridge
+  intranet:
+    internal: true
