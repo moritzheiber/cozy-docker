@@ -4,7 +4,7 @@ FROM golang:alpine as builder
 RUN apk --no-cache add git && \
   go get -u github.com/cozy/cozy-stack
 
-FROM alpine:3.7
+FROM moritzheiber/alpine-base
 
 COPY --from=builder /go/bin/cozy-stack /tmp/cozy-stack
 RUN apk --no-cache add git imagemagick && \
