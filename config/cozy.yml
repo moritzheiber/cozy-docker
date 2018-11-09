@@ -7,23 +7,26 @@ admin:
   host: localhost
   port: 6060
 
+registries:
+- https://apps-registry.cozycloud.cc/
+
 fs:
   url: file://localhost/cozy/storage
-cache:
-  url: redis://redis:6379/1
-lock:
-  url: redis://redis:6379/2
-sessions:
-  url: redis://redis:6379/3
-downloads:
-  url: redis://redis:6379/4
-jobs:
-  workers: 1
-  url: redis://redis:6379/5
-realtime:
-  url: redis://redis:6379/7
+
 couchdb:
   url: http://couchdb:5984/
+
+redis:
+  addrs: redis:6379
+  databases:
+    jobs: 0
+    cache: 1
+    lock: 2
+    sessions: 3
+    downloads: 4
+    konnectors: 5
+    realtime: 6
+    log: 7
 
 log:
   level: info
