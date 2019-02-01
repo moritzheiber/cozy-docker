@@ -27,6 +27,7 @@ redis:
     konnectors: 5
     realtime: 6
     log: 7
+    rate_limiting: 8
 
 log:
   level: info
