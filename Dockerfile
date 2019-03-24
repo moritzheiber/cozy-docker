@@ -1,8 +1,13 @@
 # vim: ft=dockerfile
 FROM golang:alpine as builder
 
+ARG VERSION="1.2.3"
+
 RUN apk --no-cache add git && \
-  go get -u github.com/cozy/cozy-stack
+  go get -d github.com/cozy/cozy-stack && \
+  cd ${GOPATH}/src/github.com/cozy/cozy-stack && \
+  git checkout tags/${VERSION} && \
+  go install -i
 
 FROM moritzheiber/alpine-base
 
