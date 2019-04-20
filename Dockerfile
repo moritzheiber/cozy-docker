@@ -4,10 +4,12 @@ FROM golang:alpine as builder
 ARG VERSION="1.2.4"
 
 RUN apk --no-cache add git && \
-  go get -d github.com/cozy/cozy-stack && \
+  git clone https://github.com/cozy/cozy-stack.git \
+    ${GOPATH}/src/github.com/cozy/cozy-stack && \
   cd ${GOPATH}/src/github.com/cozy/cozy-stack && \
   git checkout tags/${VERSION} && \
-  go install -i
+  go get -v -d . && \
+  go install -i -v
 
 FROM moritzheiber/alpine-base
 
