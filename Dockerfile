@@ -11,7 +11,7 @@ RUN apk --no-cache add git && \
   go get -v -d . && \
   go install -i -v
 
-FROM moritzheiber/alpine-base
+FROM alpine:edge
 
 COPY --from=builder /go/bin/cozy-stack /tmp/cozy-stack
 RUN apk --no-cache add git imagemagick && \
