@@ -16,6 +16,10 @@ fs:
 couchdb:
   url: http://couchdb:5984/
 
+jobs:
+  workers:
+  defaultDurationToKeep: "2W"
+
 redis:
   addrs: redis:6379
   databases:
@@ -30,5 +34,5 @@ redis:
     rate_limiting: 8
 
 log:
-  level: info
+  level: debug
   syslog: false
