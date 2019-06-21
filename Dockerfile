@@ -1,4 +1,11 @@
 # vim: ft=dockerfile
+FROM ubuntu as mime
+
+ARG DEBIAN_FRONTEND="non-interactive"
+
+RUN apt update && \
+  apt install -y mime-support
+
 FROM golang:1.12.5-alpine3.9 as builder
 
 ARG VERSION="1.2.8"
@@ -13,6 +20,7 @@ RUN apk --no-cache add git && \
 
 FROM moritzheiber/alpine-base
 
+COPY --from=mime /etc/mime.types /etc/mime.types
 COPY --from=builder /go/bin/cozy-stack /tmp/cozy-stack
 RUN apk --no-cache add git imagemagick && \
   install -m0755 -o root -g root /tmp/cozy-stack /usr/bin/cozy-stack && \
