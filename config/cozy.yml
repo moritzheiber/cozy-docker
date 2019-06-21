@@ -8,30 +8,16 @@ admin:
   port: 6060
 
 registries:
-- https://apps-registry.cozycloud.cc/
+  default:
+  - https://apps-registry.cozycloud.cc/
+  - https://apps-registry.cozycloud.cc/selfhosted
+  - https://apps-registry.cozycloud.cc/banks
 
 fs:
   url: file://localhost/cozy/storage
 
 couchdb:
   url: http://couchdb:5984/
-
-jobs:
-  workers:
-  defaultDurationToKeep: "2W"
-
-redis:
-  addrs: redis:6379
-  databases:
-    jobs: 0
-    cache: 1
-    lock: 2
-    sessions: 3
-    downloads: 4
-    konnectors: 5
-    realtime: 6
-    log: 7
-    rate_limiting: 8
 
 log:
   level: debug
