@@ -6,9 +6,9 @@ ARG DEBIAN_FRONTEND="non-interactive"
 RUN apt update && \
   apt install -y mime-support
 
-FROM golang:1.12.5-alpine3.9 as builder
+FROM golang:1.12.7-alpine3.10 as builder
 
-ARG VERSION="1.2.8"
+ARG VERSION="1.2.9"
 
 RUN apk --no-cache add git && \
   git clone https://github.com/cozy/cozy-stack.git \
