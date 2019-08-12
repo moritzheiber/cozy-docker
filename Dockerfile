@@ -8,15 +8,11 @@ RUN apt update && \
 
 FROM golang:1.12.7-alpine3.10 as builder
 
-ARG VERSION="1.2.9"
+ARG VERSION="1.3.1"
+ARG GO111MODULE="on"
 
 RUN apk --no-cache add git && \
-  git clone https://github.com/cozy/cozy-stack.git \
-    ${GOPATH}/src/github.com/cozy/cozy-stack && \
-  cd ${GOPATH}/src/github.com/cozy/cozy-stack && \
-  git checkout tags/${VERSION} && \
-  go get -v -d . && \
-  go install -i -v
+  go get -v github.com/cozy/cozy-stack@${VERSION}
 
 FROM moritzheiber/alpine-base
 
@@ -24,7 +20,7 @@ COPY --from=mime /etc/mime.types /etc/mime.types
 COPY --from=builder /go/bin/cozy-stack /tmp/cozy-stack
 RUN apk --no-cache add git imagemagick && \
   install -m0755 -o root -g root /tmp/cozy-stack /usr/bin/cozy-stack && \
-  rm -f /tmp/cozy-stack && \
+  rm /tmp/cozy-stack && \
   adduser -h /cozy -s /bin/sh -D cozy && \
   install -d -o cozy -g cozy /cozy/.cozy /cozy/storage
 
