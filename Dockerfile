@@ -6,7 +6,7 @@ ARG DEBIAN_FRONTEND="non-interactive"
 RUN apt update && \
   apt install -y mime-support
 
-FROM golang:1.12.8-alpine3.10 as builder
+FROM golang:1.13.0-alpine3.10 as builder
 
 ARG VERSION="1.3.1"
 ARG GO111MODULE="on"
