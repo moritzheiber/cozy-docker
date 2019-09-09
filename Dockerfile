@@ -8,7 +8,7 @@ RUN apt update && \
 
 FROM golang:1.13.0-alpine3.10 as builder
 
-ARG VERSION="1.3.1"
+ARG VERSION="1.3.2"
 ARG GO111MODULE="on"
 
 RUN apk --no-cache add git && \
