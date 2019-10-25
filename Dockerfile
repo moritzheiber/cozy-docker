@@ -6,9 +6,9 @@ ARG DEBIAN_FRONTEND="non-interactive"
 RUN apt update && \
   apt install -y mime-support
 
-FROM golang:1.13.0-alpine3.10 as builder
+FROM golang:1.13.3-alpine3.10 as builder
 
-ARG VERSION="1.3.2"
+ARG VERSION="1.4.0"
 ARG GO111MODULE="on"
 
 RUN apk --no-cache add git && \
