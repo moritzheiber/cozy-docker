@@ -17,7 +17,7 @@ fs:
   url: file://localhost/cozy/storage
 
 couchdb:
-  url: http://couchdb:5984/
+  url: http://cozy-couchdb:5984/
 
 log:
   level: info
